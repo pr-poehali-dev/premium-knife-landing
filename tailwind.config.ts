@@ -18,7 +18,17 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				display: ['Cormorant', 'serif'],
+				body: ['Golos Text', 'sans-serif'],
+				oswald: ['Oswald', 'sans-serif'],
+			},
 			colors: {
+				khaki: {
+					DEFAULT: 'hsl(var(--khaki))',
+					deep: 'hsl(var(--khaki-deep))',
+				},
+				graphite: 'hsl(var(--graphite))',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
