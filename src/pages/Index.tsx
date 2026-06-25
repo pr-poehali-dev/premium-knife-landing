@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import func2url from '@/../func2url.json';
+
 
 // Реальные фото изделий SHARP KNIVES
 const HERO_IMG = 'https://cdn.poehali.dev/projects/634128c6-5534-4ae8-8b2d-3514e86e881a/bucket/133bfdde-fb7b-441c-8b86-8c9d6a8737c8.jpg'; // горизонтальный — идеален для фона
@@ -59,7 +59,8 @@ const Index = () => {
     e.preventDefault();
     setStatus('loading');
     try {
-      const res = await fetch((func2url as Record<string, string>)['send-order'], {
+      const urls = await fetch('/func2url.json').then(r => r.json()).catch(() => ({}));
+      const res = await fetch(urls['send-order'] ?? '/api/send-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
