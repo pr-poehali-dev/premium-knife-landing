@@ -31,17 +31,20 @@ const Reveal = ({ children, className = '', delay = 0 }: { children: React.React
   );
 };
 
+const IMG_BLUE_SHEATH = 'https://cdn.poehali.dev/projects/634128c6-5534-4ae8-8b2d-3514e86e881a/bucket/cf0b1e92-76f5-43dc-a223-84ca65cf1161.jpg';
+
 const gallery = [
   { img: IMG_CLEAVER, title: 'Авторские модели', sub: 'Тесак с кожаными ножнами ручной работы' },
   { img: IMG_BLUE, title: 'Эксклюзивная рукоять', sub: 'Стабилизированный акрил, уникальный узор' },
   { img: IMG_ENGRAVED, title: 'Фирменная гравировка', sub: 'SHARP KNIVES · CHELYABINSK · M390' },
   { img: IMG_WOOD, title: 'Природные материалы', sub: 'Рукоять из ценных пород дерева' },
   { img: HERO_IMG, title: 'Коллекционные серии', sub: 'Дамаск и авторская отделка клинка' },
+  { img: IMG_BLUE_SHEATH, title: 'Синие ножны', sub: 'Кожаные ножны ручной выделки с тиснением' },
 ];
 
 const guarantees = [
   { icon: 'ShieldCheck', t: 'Контроль качества', d: 'Каждое изделие проходит финальную проверку мастером.' },
-  { icon: 'BadgeCheck', t: 'Сертифицированные материалы', d: 'Высоколегированные стали и редкие породы дерева.' },
+  { icon: 'BadgeCheck', t: 'Качественные материалы', d: 'Высоколегированные стали и редкие породы дерева.' },
   { icon: 'Clock', t: 'Соблюдение сроков', d: 'Изготовление и доставка точно в оговорённый день.' },
   { icon: 'Lock', t: 'Конфиденциальность', d: 'Полная приватность корпоративных заказов.' },
   { icon: 'UserCheck', t: 'Персональный менеджер', d: 'Ведёт ваш проект от идеи до вручения.' },
@@ -99,13 +102,8 @@ const Index = () => {
           </Reveal>
           <Reveal delay={400}>
             <div className="mt-12 flex flex-col sm:flex-row gap-4">
-              <a href="#catalog">
-                <Button className="bg-khaki text-graphite hover:bg-khaki-deep rounded-none h-14 px-10 uppercase tracking-luxury text-xs font-semibold w-full sm:w-auto">
-                  <Icon name="Download" size={18} className="mr-2" /> Получить каталог
-                </Button>
-              </a>
               <a href="#form">
-                <Button variant="outline" className="border-border text-foreground hover:border-khaki hover:text-khaki rounded-none h-14 px-10 uppercase tracking-luxury text-xs w-full sm:w-auto bg-transparent">
+                <Button className="bg-khaki text-graphite hover:bg-khaki-deep rounded-none h-14 px-10 uppercase tracking-luxury text-xs font-semibold w-full sm:w-auto">
                   Рассчитать стоимость проекта
                 </Button>
               </a>
@@ -149,42 +147,23 @@ const Index = () => {
           </Reveal>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {gallery.map((g, i) => (
-              <Reveal key={g.title} delay={i * 100} className={i === 4 ? 'md:col-span-1 col-span-2' : ''}>
-                <div className={`group relative overflow-hidden border border-border/40 ${i === 4 ? 'aspect-[16/7] md:aspect-[3/4]' : 'aspect-[3/4]'}`}>
-                  <img src={g.img} alt={g.title} className="w-full h-full object-cover transition-transform duration-[1.4s] group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-graphite/90 via-graphite/20 to-transparent" />
+              <Reveal key={g.title} delay={i * 100}>
+                <div className="group relative overflow-hidden border border-border/40 aspect-[3/4]">
+                  <img
+                    src={g.img}
+                    alt={g.title}
+                    className="w-full h-full object-cover transition-transform duration-[1.4s] group-hover:scale-110"
+                    style={{ filter: 'sepia(30%) contrast(110%) brightness(85%) saturate(80%)' }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-graphite via-graphite/30 to-transparent" />
                   <div className="absolute bottom-0 inset-x-0 p-5 md:p-7">
-                    <h3 className="font-display text-xl md:text-2xl mb-1 leading-tight">{g.title}</h3>
+                    <h3 className="font-display text-lg md:text-2xl mb-1 leading-tight">{g.title}</h3>
                     <p className="text-khaki text-xs font-oswald uppercase tracking-wider">{g.sub}</p>
                   </div>
                 </div>
               </Reveal>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* CATALOG / PDF */}
-      <section id="catalog" className="py-28 border-t border-border/40">
-        <div className="container">
-          <Reveal>
-            <div className="relative border border-khaki/30 bg-card p-10 md:p-16 flex flex-col md:flex-row items-center gap-10 overflow-hidden">
-              <div className="absolute inset-0 grain opacity-[0.05]" />
-              <div className="shrink-0 w-28 h-36 bg-gradient-to-br from-khaki/20 to-graphite border border-khaki/40 flex items-center justify-center relative">
-                <Icon name="FileText" size={48} className="text-khaki" />
-                <span className="absolute -bottom-3 bg-khaki text-graphite text-[10px] font-oswald uppercase tracking-wider px-3 py-1">PDF</span>
-              </div>
-              <div className="flex-1 text-center md:text-left relative z-10">
-                <h2 className="font-display text-3xl md:text-4xl mb-3 font-medium">Каталог моделей и материалов</h2>
-                <p className="text-muted-foreground max-w-xl">Подробное описание авторских моделей, сталей, рукоятей и вариантов брендирования — в одном PDF-файле.</p>
-              </div>
-              <a href="#" download className="relative z-10 shrink-0">
-                <Button className="bg-khaki text-graphite hover:bg-khaki-deep rounded-none h-14 px-10 uppercase tracking-luxury text-xs font-semibold">
-                  <Icon name="Download" size={18} className="mr-2" /> Скачать каталог
-                </Button>
-              </a>
-            </div>
-          </Reveal>
         </div>
       </section>
 
