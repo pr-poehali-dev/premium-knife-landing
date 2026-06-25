@@ -19,9 +19,9 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				display: ['Oswald', 'sans-serif'],
+				display: ['Montserrat', 'sans-serif'],
 				body: ['Montserrat', 'sans-serif'],
-				oswald: ['Oswald', 'sans-serif'],
+				oswald: ['Montserrat', 'sans-serif'],
 			},
 			colors: {
 				khaki: {

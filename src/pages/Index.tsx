@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import func2url from '@/../func2url.json';
 
 // Реальные фото изделий SHARP KNIVES
 const HERO_IMG = 'https://cdn.poehali.dev/projects/634128c6-5534-4ae8-8b2d-3514e86e881a/bucket/133bfdde-fb7b-441c-8b86-8c9d6a8737c8.jpg'; // горизонтальный — идеален для фона
@@ -39,7 +40,7 @@ const gallery = [
   { img: IMG_ENGRAVED, title: 'Фирменная гравировка', sub: 'SHARP KNIVES · CHELYABINSK · M390' },
   { img: IMG_WOOD, title: 'Природные материалы', sub: 'Рукоять из ценных пород дерева' },
   { img: HERO_IMG, title: 'Коллекционные серии', sub: 'Дамаск и авторская отделка клинка' },
-  { img: IMG_BLUE_SHEATH, title: 'Синие ножны', sub: 'Кожаные ножны ручной выделки с тиснением' },
+  { img: IMG_BLUE_SHEATH, title: 'Статуэтки в рукояти', sub: 'Мамонт, животное, танк и пр.' },
 ];
 
 const guarantees = [
@@ -51,6 +52,24 @@ const guarantees = [
 ];
 
 const Index = () => {
+  const [form, setForm] = useState({ name: '', company: '', phone: '', email: '', qty: '' });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'err'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+    try {
+      const res = await fetch((func2url as Record<string, string>)['send-order'], {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      setStatus(res.ok ? 'ok' : 'err');
+    } catch {
+      setStatus('err');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground antialiased overflow-x-hidden">
       {/* NAV */}
@@ -82,7 +101,7 @@ const Index = () => {
           </Reveal>
           <Reveal delay={100}>
             <h1 className="font-display text-5xl md:text-7xl lg:text-[5.5rem] leading-[0.95] max-w-4xl font-medium">
-              Премиальные ножи ручной работы для <span className="text-shimmer">корпоративных подарков</span> и VIP-партнёров
+              Премиальные ножи ручной работы — <span className="text-shimmer">корпоративные подарки</span> для VIP-партнёров
             </h1>
           </Reveal>
           <Reveal delay={200}>
@@ -118,11 +137,11 @@ const Index = () => {
           <Reveal>
             <p className="font-oswald text-khaki uppercase tracking-luxury text-sm mb-6">Когда обычный подарок не работает</p>
             <h2 className="font-display text-4xl md:text-5xl leading-tight mb-8 font-medium">
-              Ваши партнёры заслуживают большего, чем стандартные сувениры
+              Ваши партнёры заслуживают большего — не стандартных сувениров
             </h2>
             <div className="space-y-5 text-muted-foreground leading-relaxed text-lg">
               <p>Большинство корпоративных подарков быстро забываются. Ежедневники, кружки и стандартные наборы теряются среди десятков аналогичных презентов.</p>
-              <p>Авторский нож ручной работы — это предмет, который вызывает эмоции, демонстрирует уважение и становится символом особого отношения к получателю.</p>
+              <p>Авторский нож ручной работы вызывает эмоции, демонстрирует уважение и становится символом особого отношения к получателю.</p>
             </div>
           </Reveal>
           <Reveal delay={150}>
@@ -200,28 +219,69 @@ const Index = () => {
           <Reveal>
             <p className="font-oswald text-khaki uppercase tracking-luxury text-sm mb-6">Персональное предложение</p>
             <h2 className="font-display text-4xl md:text-5xl leading-tight mb-6 font-medium">
-              Подберите корпоративный подарок, который будут помнить годами
+              Корпоративный подарок, который будут помнить годами
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
               Получите персональную подборку премиальных ножей ручной работы и расчёт стоимости для вашей компании.
             </p>
           </Reveal>
           <Reveal delay={150}>
-            <form className="bg-card/90 backdrop-blur border border-border/60 p-8 md:p-10 space-y-4">
-              <Input placeholder="Имя" className="bg-secondary/50 border-border rounded-none h-12 focus-visible:ring-khaki" />
-              <Input placeholder="Компания" className="bg-secondary/50 border-border rounded-none h-12 focus-visible:ring-khaki" />
-              <div className="grid grid-cols-2 gap-4">
-                <Input placeholder="Телефон" className="bg-secondary/50 border-border rounded-none h-12 focus-visible:ring-khaki" />
-                <Input placeholder="Email" className="bg-secondary/50 border-border rounded-none h-12 focus-visible:ring-khaki" />
+            {status === 'ok' ? (
+              <div className="bg-card/90 backdrop-blur border border-khaki/40 p-10 text-center space-y-4">
+                <Icon name="CheckCircle" size={48} className="text-khaki mx-auto" />
+                <h3 className="font-display text-2xl">Заявка отправлена!</h3>
+                <p className="text-muted-foreground">Ответим в течение 30 минут.</p>
               </div>
-              <Input placeholder="Количество подарков" className="bg-secondary/50 border-border rounded-none h-12 focus-visible:ring-khaki" />
-              <Button className="w-full bg-khaki text-graphite hover:bg-khaki-deep rounded-none h-14 uppercase tracking-luxury text-xs font-semibold">
-                Получить персональное предложение
-              </Button>
-              <p className="text-center text-sm text-muted-foreground pt-1">
-                Ответим в течение 30 минут и подготовим индивидуальную презентацию.
-              </p>
-            </form>
+            ) : (
+              <form onSubmit={handleSubmit} className="bg-card/90 backdrop-blur border border-border/60 p-8 md:p-10 space-y-4">
+                <Input
+                  placeholder="Имя"
+                  value={form.name}
+                  onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                  required
+                  className="bg-secondary/50 border-border rounded-none h-12 focus-visible:ring-khaki"
+                />
+                <Input
+                  placeholder="Компания"
+                  value={form.company}
+                  onChange={e => setForm(f => ({ ...f, company: e.target.value }))}
+                  className="bg-secondary/50 border-border rounded-none h-12 focus-visible:ring-khaki"
+                />
+                <div className="grid grid-cols-2 gap-4">
+                  <Input
+                    placeholder="Телефон"
+                    value={form.phone}
+                    onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
+                    className="bg-secondary/50 border-border rounded-none h-12 focus-visible:ring-khaki"
+                  />
+                  <Input
+                    placeholder="Email"
+                    value={form.email}
+                    onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                    className="bg-secondary/50 border-border rounded-none h-12 focus-visible:ring-khaki"
+                  />
+                </div>
+                <Input
+                  placeholder="Количество подарков"
+                  value={form.qty}
+                  onChange={e => setForm(f => ({ ...f, qty: e.target.value }))}
+                  className="bg-secondary/50 border-border rounded-none h-12 focus-visible:ring-khaki"
+                />
+                {status === 'err' && (
+                  <p className="text-red-400 text-sm">Ошибка отправки. Попробуйте ещё раз.</p>
+                )}
+                <Button
+                  type="submit"
+                  disabled={status === 'loading'}
+                  className="w-full bg-khaki text-graphite hover:bg-khaki-deep rounded-none h-14 uppercase tracking-luxury text-xs font-semibold disabled:opacity-60"
+                >
+                  {status === 'loading' ? 'Отправляем...' : 'Получить персональное предложение'}
+                </Button>
+                <p className="text-center text-sm text-muted-foreground pt-1">
+                  Ответим в течение 30 минут и подготовим индивидуальную презентацию.
+                </p>
+              </form>
+            )}
           </Reveal>
         </div>
       </section>
