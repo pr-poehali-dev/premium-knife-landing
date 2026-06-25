@@ -19,8 +19,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				display: ['Cormorant', 'serif'],
-				body: ['Golos Text', 'sans-serif'],
+				display: ['Oswald', 'sans-serif'],
+				body: ['Montserrat', 'sans-serif'],
 				oswald: ['Oswald', 'sans-serif'],
 			},
 			colors: {

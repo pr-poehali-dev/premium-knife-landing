@@ -47,8 +47,8 @@ const Index = () => {
       {/* NAV */}
       <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-graphite/60 border-b border-border/40">
         <div className="container flex items-center justify-between h-16">
-          <div className="font-display text-2xl tracking-wide">
-            КЛИНОК<span className="text-khaki">·</span>МАСТЕРОВ
+          <div className="font-display text-xl md:text-2xl tracking-[0.18em] font-semibold">
+            SHARP<span className="text-khaki"> </span>KNIVES
           </div>
           <a href="#form">
             <Button variant="outline" className="border-khaki/50 text-khaki hover:bg-khaki hover:text-graphite rounded-none uppercase text-xs tracking-luxury">
@@ -243,7 +243,7 @@ const Index = () => {
 
       <footer className="py-10 border-t border-border/40">
         <div className="container flex flex-col md:flex-row items-center justify-between gap-4 text-muted-foreground text-sm">
-          <div className="font-display text-xl text-foreground">КЛИНОК<span className="text-khaki">·</span>МАСТЕРОВ</div>
+          <div className="font-display text-xl text-foreground tracking-[0.18em] font-semibold">SHARP<span className="text-khaki"> </span>KNIVES</div>
           <p>© 2026 · Премиальные ножи ручной работы для корпоративных подарков</p>
         </div>
       </footer>
