@@ -3,9 +3,13 @@ import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-const HERO_IMG = 'https://cdn.poehali.dev/projects/634128c6-5534-4ae8-8b2d-3514e86e881a/files/2df0f1b1-a38e-4773-817e-8583e8b72c2d.jpg';
-const CASE_IMG = 'https://cdn.poehali.dev/projects/634128c6-5534-4ae8-8b2d-3514e86e881a/files/87f4b997-a5ac-4145-a200-effd1af08066.jpg';
-const ENGRAVE_IMG = 'https://cdn.poehali.dev/projects/634128c6-5534-4ae8-8b2d-3514e86e881a/files/a5e285f4-4421-403e-8e41-2c1d9655769f.jpg';
+// Реальные фото изделий SHARP KNIVES
+const HERO_IMG = 'https://cdn.poehali.dev/projects/634128c6-5534-4ae8-8b2d-3514e86e881a/bucket/133bfdde-fb7b-441c-8b86-8c9d6a8737c8.jpg'; // горизонтальный — идеален для фона
+const IMG_CLEAVER = 'https://cdn.poehali.dev/projects/634128c6-5534-4ae8-8b2d-3514e86e881a/bucket/dff13b40-a99e-47c4-829f-4bc7058d0192.jpg'; // тесак с кожаными ножнами
+const IMG_BLUE = 'https://cdn.poehali.dev/projects/634128c6-5534-4ae8-8b2d-3514e86e881a/bucket/c73b1f7f-146a-4816-826f-4967d85118b6.jpg'; // нож с синей рукоятью
+const IMG_ENGRAVED = 'https://cdn.poehali.dev/projects/634128c6-5534-4ae8-8b2d-3514e86e881a/bucket/002c7607-3a76-4068-9a5b-531ad3b0024f.jpg'; // гравировка SHARP KNIVES CHELYABINSK
+const IMG_WOOD = 'https://cdn.poehali.dev/projects/634128c6-5534-4ae8-8b2d-3514e86e881a/bucket/b9dcc1f8-9b69-4a13-be6d-7399a6782bfa.jpg'; // нож с деревянной рукоятью на природе
+const ENGRAVE_IMG = IMG_ENGRAVED;
 
 const Reveal = ({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -28,9 +32,11 @@ const Reveal = ({ children, className = '', delay = 0 }: { children: React.React
 };
 
 const gallery = [
-  { img: HERO_IMG, title: 'Дамасская сталь', sub: 'Многослойный узор клинка' },
-  { img: ENGRAVE_IMG, title: 'Эксклюзивная отделка', sub: 'Гравировка и фурнитура' },
-  { img: CASE_IMG, title: 'Премиальная упаковка', sub: 'Деревянные кейсы и футляры' },
+  { img: IMG_CLEAVER, title: 'Авторские модели', sub: 'Тесак с кожаными ножнами ручной работы' },
+  { img: IMG_BLUE, title: 'Эксклюзивная рукоять', sub: 'Стабилизированный акрил, уникальный узор' },
+  { img: IMG_ENGRAVED, title: 'Фирменная гравировка', sub: 'SHARP KNIVES · CHELYABINSK · M390' },
+  { img: IMG_WOOD, title: 'Природные материалы', sub: 'Рукоять из ценных пород дерева' },
+  { img: HERO_IMG, title: 'Коллекционные серии', sub: 'Дамаск и авторская отделка клинка' },
 ];
 
 const guarantees = [
@@ -141,15 +147,15 @@ const Index = () => {
             <p className="font-oswald text-khaki uppercase tracking-luxury text-sm mb-4">Галерея изделий</p>
             <h2 className="font-display text-4xl md:text-6xl font-medium">Каждый нож — произведение искусства</h2>
           </Reveal>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {gallery.map((g, i) => (
-              <Reveal key={g.title} delay={i * 120}>
-                <div className="group relative overflow-hidden border border-border/40 aspect-[3/4]">
-                  <img src={g.img} alt={g.title} className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-graphite via-graphite/20 to-transparent" />
-                  <div className="absolute bottom-0 inset-x-0 p-7">
-                    <h3 className="font-display text-2xl mb-1">{g.title}</h3>
-                    <p className="text-khaki text-sm font-oswald uppercase tracking-wider">{g.sub}</p>
+              <Reveal key={g.title} delay={i * 100} className={i === 4 ? 'md:col-span-1 col-span-2' : ''}>
+                <div className={`group relative overflow-hidden border border-border/40 ${i === 4 ? 'aspect-[16/7] md:aspect-[3/4]' : 'aspect-[3/4]'}`}>
+                  <img src={g.img} alt={g.title} className="w-full h-full object-cover transition-transform duration-[1.4s] group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-graphite/90 via-graphite/20 to-transparent" />
+                  <div className="absolute bottom-0 inset-x-0 p-5 md:p-7">
+                    <h3 className="font-display text-xl md:text-2xl mb-1 leading-tight">{g.title}</h3>
+                    <p className="text-khaki text-xs font-oswald uppercase tracking-wider">{g.sub}</p>
                   </div>
                 </div>
               </Reveal>
@@ -208,7 +214,7 @@ const Index = () => {
       {/* FINAL CTA + FORM */}
       <section id="form" className="py-28 border-t border-border/40 relative">
         <div className="absolute inset-0">
-          <img src={ENGRAVE_IMG} alt="" className="w-full h-full object-cover opacity-20" />
+          <img src={HERO_IMG} alt="" className="w-full h-full object-cover opacity-25 object-center" />
           <div className="absolute inset-0 bg-graphite/85" />
         </div>
         <div className="container relative z-10 grid lg:grid-cols-2 gap-16 items-center">
